@@ -1,23 +1,24 @@
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import { Box, CssBaseline } from '@mui/material'
+
+import AppBar from '@/Layout/AppBar';
+import Layout from '@/Layout/Layout';
+
+import HomePage from '@/NWS/HomePage';
+import AboutPage from '@/NWS/AboutPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={`${process.env.PUBLIC_URL}/icons/logo.png`} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box>
+      <CssBaseline />
+      <AppBar />
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+      </Layout>
+    </Box>
   );
 }
 
