@@ -42,7 +42,7 @@ export function Drawer() {
                 selected={isEqual('/')}
                 disabled={false}
                 component={Link}
-                to={`/`}
+                to={"/"}
                 onClick={handleDrawerItemClick}
             >
                 <ListItemText primary={'Home'} />
@@ -52,7 +52,7 @@ export function Drawer() {
                 selected={isSelected('/about')}
                 disabled={false}
                 component={Link}
-                to={`/about`}
+                to={"/about"}
                 onClick={handleDrawerItemClick}
             >
                 <ListItemText primary={'About'} />
