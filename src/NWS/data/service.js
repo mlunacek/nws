@@ -2,13 +2,11 @@ import _ from 'lodash';
 import { DateTime, Duration } from 'luxon';
 import SunCalc from 'suncalc';
 
-// import { locations, locationsLookup } from './locations.js';
 import { convert } from './conversions.js';
-import { windowComputation } from './windows.js';
 import { fetchWithRetry } from './utils.js';
 
 import { includes, get } from 'lodash';
-// import { iconsMap } from '@/NWS/WeatherTable/iconsMap.js';
+import { iconsMap } from './iconsMap.js';
 
 const nightColor = "#eaeaf6"
 const dayColor = "#f8f8f8"
@@ -190,7 +188,7 @@ async function getNWSData(location) {
         d['dayNight'] = getSunValue({ location, timestamp: d['timestamp'] })
         d['dayNightColor'] = d['dayNight'] === 'day' ? dayColor : nightColor
 
-        // d['icon'] = get(get(iconsMap, d['forecastLabel']), d['dayNight'])
+        d['icon'] = get(get(iconsMap, d['forecastLabel']), d['dayNight'])
         d['name'] = location.name
         d['location'] = location.id
         d['source'] = "nws"
