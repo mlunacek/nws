@@ -27,7 +27,7 @@ export default function ResponsiveTable({ location, data }) {
         <>
             {isPortrait ? (
                 <Box paddingLeft={0.5} paddingRight={0.5}>
-                    <VerticalTable data={data} />
+                    <VerticalTable location={location} data={data} />
                 </Box>
             ) : (
                 <Box paddingLeft={1} paddingRight={1} paddingTop={1}>

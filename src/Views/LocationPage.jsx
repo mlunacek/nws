@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Box } from '@mui/material';
 import PageHeader from "@/utils/PageHeader";
 import PageContainer from '@/utils/PageContainer';
@@ -57,14 +57,22 @@ const LocationPage = () => {
         }
     }, [data])
 
-
+    const forecastWeatherLink = useMemo(() => {
+        if (location) {
+            return `https://forecast.weather.gov/MapClick.php?lat=${location.lat}&lon=${location.lon}&lg=english&FcstType=graphical`
+        }
+    }, [location])
 
     return (
         <Box >
             <PageContainer>
 
 
+
                 {!loading &&
+
+
+
                     <ResponsiveTable
                         location={location}
                         data={data?.data}
@@ -72,7 +80,7 @@ const LocationPage = () => {
                 }
 
             </PageContainer>
-        </Box>
+        </Box >
     )
 }
 

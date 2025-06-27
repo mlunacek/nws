@@ -1,29 +1,13 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
+import React, { useMemo } from 'react';
+import { Box } from '@mui/material';
 import { DateTime } from 'luxon';
-import { first } from 'lodash';
 
 import CellTime from './CellTime'
 import CellWindDirection from './CellWindDirection';
 import CellWindSpeed from './CellWindSpeed';
 import CellTemperature from './CellTemperature';
-
-import CellThunder from './CellThunder'
 import CellPrecip from './CellPrecip'
-import CellClouds from './CellClouds'
 import CellIcons from './CellIcons'
-
-const formatTime24hr = (time) => {
-    const hours = time.getHours()
-    const minutes = time.getMinutes() / 60
-    return hours + minutes
-};
-
-const tableStyle = {
-    tableLayout: 'fixed',  // Forces the table to respect cell width
-    width: '100%', // Or whatever makes sense for your columns
-    width: 'max-content', // Let it grow based on content
-};
 
 const stickyHeader = {
     position: 'sticky',
@@ -39,11 +23,19 @@ const stickyHeader = {
 const nightColor = "#eaeaf6"
 const dayColor = "#f8f8f8"
 
-export default function VerticalTable({ data }) {
+export default function VerticalTable({ location, data }) {
 
-    const tableRef = useRef(null);
-    const [isDragging, setIsDragging] = useState(false);
+    const forecastWeatherLink = useMemo(() => {
+        if (location) {
+            return `https://forecast.weather.gov/MapClick.php?lat=${location.lat}&lon=${location.lon}&lg=english&FcstType=graphical`
+        }
+    }, [location])
 
+    // const noaaLink = useMemo(() => {
+    //     if (location) {
+    //         return `https://www.nws.noaa.gov/wtf/MapClick.php?lat=${location.lat}&lon=${location.lon}&FcstType=textr&unit=0&lg=ep`
+    //     }
+    // }, [location])
 
     return (
         <Box
@@ -68,6 +60,24 @@ export default function VerticalTable({ data }) {
                 <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
                     <thead>
                         <tr>
+                            <td colSpan={7}
+                                style={{
+                                    textAlign: 'center',
+                                    paddingLeft: 5,
+                                    background: dayColor
+                                }}>
+                                Source data
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colSpan={7} style={{
+                                textAlign: 'center',
+                                padding: 5,
+                            }}>
+                                <a href={forecastWeatherLink} target="_blank" rel="noreferrer"> forecast.weather.gov </a>
+                            </th>
+                        </tr>
+                        <tr>
                             <th style={stickyHeader}>Time</th>
                             <th style={stickyHeader}>Icons</th>
                             <th style={stickyHeader}>Temp</th>
@@ -78,6 +88,7 @@ export default function VerticalTable({ data }) {
                             {/* <th style={stickyHeader}>Thunder</th> */}
                             {/* <th style={stickyHeader}>Sky</th> */}
                         </tr>
+
                     </thead>
 
                     <tbody >
