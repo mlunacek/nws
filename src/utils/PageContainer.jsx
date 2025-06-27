@@ -1,6 +1,9 @@
 import { Container, Box } from '@mui/material';
 
-const PageContainer = ({ children, maxWidth = 'xlg' }) => {
+const PageContainer = ({ children, maxWidth = 'xlg', padding }) => {
+
+    const minPadding = padding ? padding : 0
+
     return (
         <Box
             border={0}
@@ -9,8 +12,8 @@ const PageContainer = ({ children, maxWidth = 'xlg' }) => {
                 borderBottom: 'none !important',
                 boxShadow: 'none !important',
                 padding: 0,
-                paddingLeft: { xs: 0, sm: 0, md: 2, lg: 3, xl: 4 },
-                paddingRight: { xs: 0, sm: 0, md: 2, lg: 3, xl: 4 },
+                paddingLeft: { xs: minPadding, sm: minPadding, md: minPadding + 2, lg: 3, xl: 4 },
+                paddingRight: { xs: minPadding, sm: minPadding, md: minPadding + 2, lg: 3, xl: 4 },
                 margin: 0,
                 backgroundColor: 'background.dashboard',
             }}
