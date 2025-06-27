@@ -19,6 +19,20 @@ const locationsValues = [
         lon: -105.221,
     },
     {
+        id: "denver",
+        name: "Denver",
+        category: "Cities",
+        lat: 39.739,
+        lon: -104.990,
+    },
+    {
+        id: "longmont",
+        name: "Longmont",
+        category: "Cities",
+        lat: 40.1640,
+        lon: -105.163,
+    },
+    {
         id: "lookout",
         name: "Lookout",
         category: "Front range",

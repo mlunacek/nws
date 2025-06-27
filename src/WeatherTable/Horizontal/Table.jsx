@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Collapse } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Link, Typography, Collapse } from '@mui/material';
 import { DateTime } from 'luxon';
 import { first } from 'lodash';
 
@@ -22,6 +22,7 @@ import RowSnowEvent from './RowShowEvent';
 import RowHazeEvent from './RowHazeEvent';
 import RowIcon from './RowIcon'
 import RowPrecipPercent from './RowPrecipPercent';
+import RowLCL from './RowLCL';
 
 const formatTime24hr = (time) => {
     const hours = time.getHours()
@@ -30,6 +31,7 @@ const formatTime24hr = (time) => {
 };
 
 export default function HorizontalTable({ location, data }) {
+
 
     const padding = 5;
     const cellWidth = 35;
@@ -44,6 +46,13 @@ export default function HorizontalTable({ location, data }) {
     const windSpeedFontSize = 0.8
     const tempFontSize = 0.7
     const timeFontSize = 0.7
+
+    const forecastWeatherLink = useMemo(() => {
+        if (location) {
+            return `https://forecast.weather.gov/MapClick.php?lat=${location.lat}&lon=${location.lon}&lg=english&FcstType=graphical`
+        }
+    }, [location])
+
 
 
     const tableStyle = {
@@ -89,9 +98,18 @@ export default function HorizontalTable({ location, data }) {
             maxWidth: '100%',
         }}
         >
+
+            <Typography style={{ padding: 10 }}>
+                View the forecast data at{' '}
+                <Link href={forecastWeatherLink} target="_blank" rel="noreferrer">
+                    forecast.weather.gov
+                </Link>
+            </Typography>
+
             <div
                 ref={tableRef}
                 style={{
+                    paddingTop: 0,
                     overflowX: 'auto',
                     overflowY: 'hidden',
                     maxWidth: '100%',
@@ -144,6 +162,15 @@ export default function HorizontalTable({ location, data }) {
 
                         <RowPrecip
                             column="precip_amount"
+                            data={data}
+                            legendWidth={legendWidth}
+                            padding={padding}
+                            cellHeight={cellHeightSmall}
+                            cellWidth={cellWidth}
+                            cellFontSize={tempFontSize} />
+
+                        <RowLCL
+                            column="lcl"
                             data={data}
                             legendWidth={legendWidth}
                             padding={padding}

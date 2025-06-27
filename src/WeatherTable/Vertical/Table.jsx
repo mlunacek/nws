@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Box } from '@mui/material';
+import { Box, Link } from '@mui/material';
 import { DateTime } from 'luxon';
 
 import CellTime from './CellTime'
@@ -8,6 +8,7 @@ import CellWindSpeed from './CellWindSpeed';
 import CellTemperature from './CellTemperature';
 import CellPrecip from './CellPrecip'
 import CellIcons from './CellIcons'
+import CellLCL from './CellLCL'
 
 const stickyHeader = {
     position: 'sticky',
@@ -15,9 +16,9 @@ const stickyHeader = {
     zIndex: 10,
     background: '#ececec',
     borderBottom: '1px solid #fff',
-    fontSize: `0.7em`,
+    fontSize: `0.9em`,
     color: 'grey',
-    padding: '4px'
+    padding: '8px'
 }
 
 const nightColor = "#eaeaf6"
@@ -59,36 +60,39 @@ export default function VerticalTable({ location, data }) {
 
                 <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
                     <thead>
-                        <tr>
-                            <td colSpan={7}
+                        {/* <tr>
+                            <td colSpan={8}
                                 style={{
                                     textAlign: 'center',
                                     paddingLeft: 5,
-                                    background: dayColor
+                                    background: "#ececec"
                                 }}>
-                                Source data
+                                View the forecast data at{' '}
+                            </td>
+                        </tr> */}
+                        <tr>
+                            <td colSpan={8} style={{
+                                textAlign: 'center',
+                                padding: 10,
+                            }}>
+                                View the forecast data at{' '}
+                                <Link href={forecastWeatherLink} target="_blank" rel="noreferrer">
+                                    forecast.weather.gov
+                                </Link>
                             </td>
                         </tr>
                         <tr>
-                            <th colSpan={7} style={{
-                                textAlign: 'center',
-                                padding: 5,
-                            }}>
-                                <a href={forecastWeatherLink} target="_blank" rel="noreferrer"> forecast.weather.gov </a>
-                            </th>
-                        </tr>
-                        <tr>
                             <th style={stickyHeader}>Time</th>
-                            <th style={stickyHeader}>Icons</th>
+                            <th style={stickyHeader}></th>
                             <th style={stickyHeader}>Temp</th>
-                            <th style={stickyHeader}>Precip</th>
-                            <th style={stickyHeader}>Direction</th>
+                            <th style={stickyHeader}>Prec</th>
+                            <th style={stickyHeader}>LCL</th>
+                            <th style={stickyHeader}>Dir</th>
                             <th style={stickyHeader}>Wind</th>
                             <th style={stickyHeader}>Gust</th>
                             {/* <th style={stickyHeader}>Thunder</th> */}
                             {/* <th style={stickyHeader}>Sky</th> */}
                         </tr>
-
                     </thead>
 
                     <tbody >
@@ -113,10 +117,11 @@ export default function VerticalTable({ location, data }) {
                                         </tr>
                                     )}
                                     <tr key={i} >
-                                        <CellTime data={d} cellWidth={30} />
+                                        <CellTime data={d} cellWidth={30} cellFontSize={1.3} />
                                         <CellIcons data={d} />
                                         <CellTemperature data={d} cellWidth={40} cellFontSize={1.1} />
                                         <CellPrecip data={d} cellWidth={40} cellFontSize={0.7} />
+                                        <CellLCL data={d} cellWidth={40} cellFontSize={0.8} />
                                         <CellWindDirection data={d.wind_dir} cellWidth={40} />
                                         <CellWindSpeed data={data} column={"wind_speed"} index={i} cellWidth={40} cellFontSize={1.25} />
                                         <CellWindSpeed data={data} column={"wind_gust"} index={i} cellWidth={40} cellFontSize={1.25} />

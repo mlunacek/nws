@@ -6,15 +6,11 @@ import { zip } from 'lodash'
 
 
 
-export default function CellTime({ data, cellWidth, cellFontSize }) {
+export default function CellLCL({ data, cellWidth, cellFontSize }) {
 
     const df = useMemo(() => {
         if (!data) return;
-
-        const dt = DateTime.fromFormat(data?.timestamp, 'yyyy-MM-dd HH:mm:ss');
-        // Extract time of day with AM/PM
-        const timeOfDay = dt.toFormat("ha").toLowerCase(); // Time in 'hh:mm AM/PM' format
-        return timeOfDay
+        return (parseInt(data?.lcl) / 1000).toFixed(1)
 
     }, [data])
 
@@ -29,7 +25,7 @@ export default function CellTime({ data, cellWidth, cellFontSize }) {
                 background: `${data.dayNightColor}`
             }}
             align="center">
-            {df}
+            {df}K
         </td>
     )
 }

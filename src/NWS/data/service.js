@@ -20,6 +20,7 @@ const properties = [
     'mixingHeight',
     'skyCover',
     'windSpeed',
+    'dewpoint',
     'windGust',
     'windDirection'
 ];
@@ -30,6 +31,7 @@ const propertiesMap = {
     windSpeed: 'wind_speed',
     windGust: 'wind_gust',
     windDirection: 'wind_dir',
+    dewpoint: 'dewpoint',
     lightningActivityLevel: 'lightning',
     quantitativePrecipitation: 'precip_amount',
     probabilityOfPrecipitation: 'precip_percent',
@@ -147,6 +149,7 @@ async function getLocationData(location, setNwsData) {
     const data = await getNWSData(location)
     console.log("data", data)
     if (setNwsData) {
+
         setNwsData(data);
     }
     return data;
@@ -163,7 +166,7 @@ async function getNWSData(location) {
     const hourlyRes = await fetchWithRetry(hourlyUrl, 10);
     const hourlyData = await hourlyRes.json();
 
-    // console.log("hourlyData", hourlyData?.properties)
+    console.log("hourlyData", hourlyData?.properties)
 
 
     // Do we need this?
@@ -188,6 +191,9 @@ async function getNWSData(location) {
         d['dayNight'] = getSunValue({ location, timestamp: d['timestamp'] })
         d['dayNightColor'] = d['dayNight'] === 'day' ? dayColor : nightColor
 
+        const tc = (d['temperature'] - 32) * 5 / 9
+        const dc = (d['dewpoint'] - 32) * 5 / 9
+        d['lcl'] = (125 * (tc - dc)) * 3.28
         d['icon'] = get(get(iconsMap, d['forecastLabel']), d['dayNight'])
         d['name'] = location.name
         d['location'] = location.id
